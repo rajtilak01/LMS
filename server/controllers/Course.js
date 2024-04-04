@@ -39,9 +39,9 @@ exports.createCourse = async (req, res) => {
       !courseDescription ||
       !whatYouWillLearn ||
       !price ||
-      !tag.length ||
+      // !tag.length ||
       !thumbnail ||
-      !category ||
+      // !category ||
       !instructions.length
     ) {
       return res.status(400).json({
@@ -65,13 +65,13 @@ exports.createCourse = async (req, res) => {
     }
 
     // Check if the tag given is valid
-    const categoryDetails = await Category.findById(category)
-    if (!categoryDetails) {
-      return res.status(404).json({
-        success: false,
-        message: "Category Details Not Found",
-      })
-    }
+    // const categoryDetails = await Category.findById(category)
+    // if (!categoryDetails) {
+    //   return res.status(404).json({
+    //     success: false,
+    //     message: "Category Details Not Found",
+    //   })
+    // }
     // Upload the Thumbnail to Cloudinary
     const thumbnailImage = await uploadImageToCloudinary(
       thumbnail,
@@ -86,7 +86,7 @@ exports.createCourse = async (req, res) => {
       whatYouWillLearn: whatYouWillLearn,
       price,
       tag,
-      category: categoryDetails._id,
+      // category: categoryDetails._id,
       thumbnail: thumbnailImage.secure_url,
       status: status,
       instructions,
@@ -105,16 +105,16 @@ exports.createCourse = async (req, res) => {
       { new: true }
     )
     // Add the new course to the Categories
-    const categoryDetails2 = await Category.findByIdAndUpdate(
-      { _id: category },
-      {
-        $push: {
-          courses: newCourse._id,
-        },
-      },
-      { new: true }
-    )
-    console.log("HEREEEEEEEE", categoryDetails2)
+    // const categoryDetails2 = await Category.findByIdAndUpdate(
+    //   { _id: category },
+    //   {
+    //     $push: {
+    //       courses: newCourse._id,
+    //     },
+    //   },
+    //   { new: true }
+    // )
+    // console.log("HEREEEEEEEE", categoryDetails2)
     // Return the new course and a success message
     res.status(200).json({
       success: true,

@@ -116,11 +116,14 @@ exports.getAllUserDetails = async (req, res) => {
 
 exports.updateDisplayPicture = async (req, res) => {
   try {
+    console.log(req);
     const displayPicture = req.files.displayPicture
     const userId = req.user.id
     const image = await uploadImageToCloudinary(
       displayPicture,
-      process.env.FOLDER_NAME,
+      // process.env.FOLDER_NAME,
+      //error may be generated here so check back at it
+      process.env.CLOUD_NAME,
       1000,
       1000
     )
@@ -136,6 +139,7 @@ exports.updateDisplayPicture = async (req, res) => {
       data: updatedProfile,
     })
   } catch (error) {
+    console.log("error coming from the cloudinary backend thing", error)
     return res.status(500).json({
       success: false,
       message: error.message,

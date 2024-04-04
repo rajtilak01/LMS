@@ -104,7 +104,7 @@ exports.signup = async (req, res) => {
       message: "User registered successfully",
     })
   } catch (error) {
-    console.error(error)
+    console.error("error coming from backend signup thing", error)
     return res.status(500).json({
       success: false,
       message: "User cannot be registered. Please try again.",
